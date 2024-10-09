@@ -1,6 +1,6 @@
 
 import Image from "next/image"
-import about from "@/public/about.jpg"
+import about from "@/public/about.png"
 
 
 export default function About() {
