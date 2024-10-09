@@ -59,11 +59,13 @@ header{
   color: white;
   margin-left: 4rem;
   font-weight: 500;
-  transition: 0.6s ease;
+  transition-duration: 0.3s;
   border-bottom: 3px solid transparent;
 
  }
- 
+ .header-btn{
+  transition-duration: 0.2s;
+ }
  .header-btn:hover{
   color: #b74b4b;
   border-bottom: 3px solid;
@@ -153,7 +155,7 @@ span{
   border-radius: 30px;
   box-shadow: 0 0 25px;
   cursor: pointer;
-  transition: 0.2s linear infinite;
+  transition-duration: 0.5s;
 }
 .picture:hover{
   transform: scale(1.1) translateY(-1px); 
@@ -173,6 +175,7 @@ span{
   border-radius: 50%;
   margin: 1rem 1rem 2rem;
   transition: 0.3s ease;
+  transition-duration: 0.5s;
   color: white;
 
 }
@@ -198,7 +201,7 @@ span{
 .profession-span::before{
   content: "Next js developer";
   color: #b74b4b;
-  animation: words 5s infinite 0.5s ease-in forwards ;
+  animation: words 5s infinite 0.5s ease-out alternate-reverse ;
   
 }
 
@@ -207,10 +210,10 @@ span{
   position: absolute;
   right: -8;
   width: calc(100%+8px);
-  height: 100%;
+  height: 50px;
   background-color: #161616;
   border-left: 3px solid #161616;
- animation: cursor 0.6s infinite;
+  animation: cursor 6s infinite;
 }
 
 .mainPragraph{
@@ -225,16 +228,17 @@ span{
 @keyframes cursor {
   to{
     border-left: 3px solid #161616;
+    
   }
 }
 
 @keyframes words {
   0%,25% {
-    content: "web developer";
+    content: "WEB DEVELOPER";
     
   }
   26%,50%{
-    content: "Next js developer";
+    content: "NextJS DEVELOPER ";
    
   }
   51%,75%{
@@ -242,7 +246,7 @@ span{
  
   }
   76%,100%{
-    content: "web developer";
+    content: "WEB DEVELOPER";
 
 
 }
@@ -268,11 +272,11 @@ span{
   }
 
   .name{
-    font-size: 2.5rem;
+    font-size: 5rem;
   }
 
   .profession{
-    font-size: 5rem;
+    font-size: 3rem;
   }
 
   .picture{
@@ -288,24 +292,34 @@ span{
   }
 }
 
+@media(max-width:600px){
+  .intro{
+    flex-direction: column;
+  
+    margin: 0px;
+  
+
+  }
+}
+
 /* ABOUT SECTION */
 .AboutSection{
   display: flex;
   gap: 8rem;
-  margin-top:40px ;
-  padding: 40px;
+  margin-top:100px ;
+  padding: 10px;
   flex-wrap: wrap;
 }
 
 .AboutPicture{
  margin-top: 50px;
-  margin-left: 30px;
+  margin-left: 50px;
   position: relative;
   width: 32vw;
   border-radius: 30px;
   box-shadow: 0 0 25px;
   cursor: pointer;
-  transition: 0.7s linear infinite;
+  transition-duration: 0.5s;
 }
 .AboutPicture:hover{
   transform: scale(1.1) translateY(-1px); 
@@ -338,6 +352,7 @@ span{
   font-weight: 400;
   color: rgb(252, 249, 249);
   transition: 0.5s linear infinite;
+  transition-duration: 0.5s;
 
 }
 .experienceSection:hover{
@@ -356,6 +371,7 @@ span{
   font-weight: 400;
   color: rgb(255, 255, 255);
   transition: 0.5s linear infinite;
+  transition-duration: 0.5s;
 }
 .educationSection:hover{
   transform: scale(1.1) translateY(-1px); 
@@ -372,6 +388,7 @@ span{
   font-weight: 400;
   color: rgb(255, 255, 255);
   transition: 0.5s linear infinite;
+  transition-duration: 0.6s;
 }
 .skillSection:hover{
   transform: scale(1.1) translateY(-1px); 
@@ -385,7 +402,7 @@ span{
 
 @media (max-width:1000px){
   .AboutSection{
-    gap: 4rem;
+    gap: 2rem;
     
   }
 }
@@ -422,6 +439,17 @@ span{
 
   
 }
+@media(max-width:600px){
+  .aboutTitle{
+    flex-direction: column;
+    margin: 0px;
+
+
+  }
+  
+}
+
+
 
 
 /* PRoject Page */
@@ -509,7 +537,7 @@ span{
 
 @media only screen and (max-width:1000px){
   .projectContainer{
-    gap: 4rem;
+    gap: 2rem;
    
   }
 }
@@ -534,7 +562,7 @@ span{
   }
  .projectImage{
    
-    height: 250px;
+    height: 200px;
     
   }
 }
@@ -567,6 +595,7 @@ span{
   width: 100%;
   margin-top: 100px;
   flex-wrap: wrap;
+  
   
 }
 
@@ -636,6 +665,7 @@ label{
 }
 @media only screen and (max-width:1000px){
   .contactSection{
+    flex-direction: column;
     gap: 2rem;
   
    
@@ -643,8 +673,8 @@ label{
 }
 @media(max-width:600px){
   .contactForm{
-   
-    margin: 4em 4em;
+    flex-direction: column;
+    margin: 2em 2em;
     height: 400px;
     margin-bottom: -30px;
     margin-top: -30px;
@@ -654,7 +684,7 @@ label{
   }
   .conectSection{
     flex-direction: column;
-    margin: 4em 4em;
+    margin: 2em 2em;
     height: 400px;
   }
   form{
@@ -666,6 +696,8 @@ label{
   margin-top: 15px;
 }
 }
+
+
 
 /* footer Page */
 .footerContainer{
@@ -679,6 +711,7 @@ label{
   bottom: 0;
   left: 0;
   width: 100%;
+  flex-wrap: nowrap;
 }
 .footerLogo{
   font-size: 30px;
