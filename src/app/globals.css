@@ -76,36 +76,50 @@ header{
 }
 
 @media(max-width:995px){
-  .header-button{
-    position: absolute;
-    display: none;
-    top: 0;
-    right: 0;
-    width: 40%;
-    border-left:3px solid #b74b4b ;
-    border-bottom: 3px solid #b74b4b;
-    border-bottom-left-radius: 2rem;
-    padding: 1rem;
-    background-color: #161616;
-    border-top: 0.1rem solid rgba(0,0,0,0.1);
+  
+header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px;
+}
+  .logo{
+    font-size: 1rem;
+    margin-bottom: 15px;
+    width: 30%;
+    align-items: start;
+    margin-left: -0px;
+
+   
   }
   .header-button{
-    display: hidden ;
+    position: absolute;
+    align-items: left;
+    gap: 20px;
+    top: 0;
+    right: 0;
+    width: 70%;
+    font-size: 1rem;
+    margin-left: 30px;
+ 
+  }
+  .header-button{
+    display:flex ;
 
 
   }
 
   .header-btn{
-    display: block;
-    font-size: 2rem;
-    margin: 3rem 0;
+  
+    font-size: 1rem;
+    margin: 1rem 0;
   }
 
   .header-btn:hover,
   .header-btn:active{
     padding: 1rem;
     border-radius: 0.5rem;
-    border-bottom: 0.5rem solid #b74b4b;
+    border-bottom: 0.5rem solid  #b74b4b;
 
 
   }
@@ -302,6 +316,9 @@ span{
   
 
   }
+
+ 
+
   
 
 /* ABOUT SECTION */
@@ -543,7 +560,7 @@ span{
 @media(max-width:600px){
   .aboutTitle{
     flex-direction: column;
-    margin: 5rem 4em;
+    margin: 5rem 5em;
 
 
   }
@@ -554,9 +571,10 @@ span{
   }
 
   .projectCard{
-    margin-left: 20px;
+    margin-left: 10px;
+    margin-right: 30px;
     width: 650px;
-    height: 400px;;
+    height: fit-content;
   
   }
  .projectImage{
@@ -566,6 +584,10 @@ span{
   }
 }
 @media(max-width:300px){
+  .projectContainer{
+   margin-right: 20px;
+  
+  }
   
   .projectTitle{
     font-size: 2rem;
@@ -574,12 +596,18 @@ span{
 
   .projectCard{
    
-    margin-left: 20px;
-    width: 150px;
+    margin-left: 10px;
+    margin-right: 20px;
+    width: 250px;
     height: fit-content;
   
     
 
+  }
+  .projectButton{
+    
+    gap: 2rem;
+   
   }
 
 }
@@ -695,6 +723,16 @@ label{
     font-size: 15px;
   margin-top: 15px;
 }
+}
+@media(max-width:300px){
+
+  .contactSection{
+    flex-direction: column;
+    gap: 2rem;
+    margin-right: 20px;
+   
+  }
+
 }
 
 
