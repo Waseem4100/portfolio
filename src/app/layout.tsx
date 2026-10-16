@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+// @ts-expect-error Next.js handles CSS imports at build time.
 import "./globals.css";
-import Header from "@/component/header";
+import Header from "@/Header"
 import Footer from "@/component/footer";
 
 const geistSans = localFont({

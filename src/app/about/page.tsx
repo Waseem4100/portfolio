@@ -17,15 +17,20 @@ export default function About() {
 
      <div className="aboutTitle">
       <h2 className="aboutHeading">About Me</h2>
-      <p className="aboutDescription"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo esse molestiae dignissimos animi facilis dolore voluptates rem laudantium non iusto, odio dolores, repellendus vero iure corporis magni pariatur suscipit! Expedita.</p>
+      <p className="aboutDescription"> I'm Waseem Ahmed, a developer in the making at the Governor Initiative for AI (GIAIC), where I'm learning TypeScript, HTML, CSS, Tailwind CSS, and Next.js.
+
+I enjoy building modern, responsive web interfaces and applications powered by Claude, turning ideas into clean, functional products.
+
+I'm always learning, always building, and looking for opportunities to collaborate on projects that make a real impact.</p>
      
      <div className="flex flex-row mt-8">
       <span className="skillSection">Skill
 
       <ul className="mt-3 hover: text-white">
-        <li>html</li>
-        <li>css</li>
-        <li> typescript</li>
+        <li>HTML</li>
+        <li>CSS/tailwind CSS</li>
+        <li> TypeScript</li>
+        <li>NEXT.js</li>
       </ul>
       
       </span>
@@ -33,6 +38,7 @@ export default function About() {
       <span className="educationSection">Education
       <ul className="mt-3 hover: text-white" >
           <li>INTERMEDIATE</li>
+          <li>currently enrolled in GIAIC</li>
      </ul>
       </span>
 

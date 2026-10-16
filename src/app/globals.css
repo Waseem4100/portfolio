@@ -1,796 +1,896 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Tailwind v4 users: replace the three lines above with  @import "tailwindcss";  */
 
-*{
-  margin: 0;
-  padding: o;
-  box-sizing: border-box;
-  border: none;
-  outline: none;
-  font-family:
-  Tahoma;
-}
-html{
-  font-size: 62.5%;
+/* ---------- Design tokens ---------- */
+:root {
+  --accent: #b74b4b;        /* borders, fills, glows (unchanged brand colour) */
+  --accent-text: #f28b8b;   /* accent used for TEXT: ~4.5:1 on the dark bg (#b74b4b is only ~2:1) */
+  --accent-dark: #8f3535;   /* text inside the light form inputs */
+  --bg: #3d3d3d;
+  --card: #161616;
+  --header-h: 9rem;         /* used to clear the fixed header */
 }
 
-body{
-  width: 100%;
-  height: 100vh;
-  overflow-x: hidden;
-  background-color: rgb(61, 61, 61);
-  color: white;
-
-}
-
-header{
-  margin-top: 20px ;
-   position: fixed;
-   top: 0;
-   left:0 ;
-   width: 100%;
-   padding: 1rem 9%;
-   background-color: transparent;
-   filter: drop-shadow(10px);
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   z-index: 100;
-} 
-
-.logo{
-  font-size: 3rem;
-  font-style: italic;
-  color: #b74b4b;
-  margin: 15px;
-  font-weight:800;
-  transition: 0.5s ease;
- }
-
- .logo:hover{
-  transform: scale(1.1) translateY(-1px); 
- }
- .header-button{
-  display: flex;
-  padding: 20px;
-  gap: 30px;
-  font-size: 1.8rem;
-  color: white;
-  margin-left: 4rem;
-  font-weight: 500;
-  transition-duration: 0.3s;
-  border-bottom: 3px solid transparent;
-
- }
- .header-btn{
-  transition-duration: 0.2s;
- }
- .header-btn:hover{
-  color: #b74b4b;
-  border-bottom: 3px solid;
-}
-.header-btn:active{
-  color: #b74b4b;
-  border-bottom: 3px solid;
-}
-
-@media(max-width:995px){
-  
-header{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0px;
-}
-  .logo{
-    font-size: 1rem;
-    margin-bottom: 15px;
-    width: 30%;
-    align-items: start;
-    margin-left: -0px;
-
-   
+/* ---------- Base (element selectors) ---------- */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
-  .header-button{
-    position: absolute;
-    align-items: left;
-    gap: 20px;
-    top: 0;
-    right: 0;
-    width: 70%;
-    font-size: 1rem;
-    margin-left: 30px;
+
+  /* 1rem = 10px. Note: Tailwind's own rem utilities (p-4, text-lg, ...) shrink by 37.5% with this. */
+  html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--header-h);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    background-color: var(--bg);
+    color: #fff;
+    font-family: Tahoma, Verdana, system-ui, sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.5;
+  }
+
+  /* Visible keyboard focus (the old `outline: none` removed it) */
+  :focus-visible {
+    outline: 3px solid var(--accent-text);
+    outline-offset: 3px;
+  }
+
  
+
+  form {
+    display: block;
+    padding: 1rem;
   }
-  .header-button{
-    display:flex ;
 
-
+  label {
+    display: block; /* inline elements ignore vertical margins */
+    font-size: 2rem;
+    margin: 1.5rem 0 0.5rem;
   }
 
-  .header-btn{
-  
-    font-size: 1rem;
-    margin: 1rem 0;
+  form input,
+  form textarea {
+    display: block;
+    width: 100%;
+    min-height: 4rem;
+    padding: 0.8rem 1.2rem;
+    border: 3px solid var(--accent);
+    border-radius: 10px;
+    font-size: 1.6rem; /* 16px+ stops iOS zooming in on focus */
+    color: var(--accent-dark);
+    background-color: rgb(235, 235, 235);
+  }
+
+  form textarea {
+    min-height: 15rem;
+    resize: vertical;
+  }
+
+  form input::placeholder,
+  form textarea::placeholder {
+    color: #666;
+  }
+}
+
+/* ---------- Components ---------- */
+@layer components {
+  /* ===== Header ===== */
+  .logo {
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-style: italic;
+    color: var(--accent-text);
+    margin: 0.5rem 1.5rem;
+    font-weight: 800;
+    transition: transform 0.5s ease;
+  }
+
+  .logo:hover {
+    transform: scale(1.1) translateY(-1px);
+  }
+
+  .header-button {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    padding: 2rem;
+    margin-left: 4rem;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: #fff;
+  }
+
+  .header-btn {
+    border-bottom: 3px solid transparent; /* reserved so hover doesn't shift layout */
+    transition: color 0.2s, border-color 0.2s;
   }
 
   .header-btn:hover,
-  .header-btn:active{
+  .header-btn:active {
+    color: var(--accent-text);
+    border-bottom-color: var(--accent);
+  }
+
+  /* ===== Hero ===== */
+  .Main {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem 8rem;
+    margin-top: calc(var(--header-h) + 2rem);
+    padding: 4rem;
+  }
+
+  .intro {
+    flex: 1 1 40rem;     /* was width:50% + height:500px (overflowed on small screens) */
+    max-width: 60rem;
+    margin-left: 4rem;
+  }
+
+  .name {
+    font-size: clamp(3.4rem, 7vw, 6rem);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .name span,
+  .profession span,
+  .profession-span {
+    color: var(--accent-text);
+  }
+
+  .profession {
+    font-size: clamp(2.2rem, 4.5vw, 4rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .picture {
+    position: relative;
+    flex: 1 1 28rem;
+    width: 100%;
+    max-width: 45rem;
+    height: auto;
+    margin-top: 4rem;
+    margin-left: 3rem;
+    object-fit: cover;
+    border: 3px solid transparent; /* reserved so hover doesn't shift layout */
+    border-radius: 30px;
+    box-shadow: 0 0 25px;
+    cursor: pointer;
+    transition: transform 0.5s, border-color 0.5s, box-shadow 0.5s;
+  }
+
+  .picture:hover {
+    transform: scale(1.05) translateY(-1px);
+    border-color: var(--accent);
+    box-shadow: 0 0 25px var(--accent);
+  }
+
+  /* Use class="social" in your HTML (ids must be unique). #social kept so nothing breaks. */
+  #social,
+  .social {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 4rem;
+    margin: 1rem 1rem 2rem;
+    font-size: 2rem;
+    color: #fff;
+    background-color: transparent;
+    border: 0.2rem solid var(--accent);
+    border-radius: 50%;
+    transition: transform 0.5s, background-color 0.5s, color 0.5s, box-shadow 0.5s;
+  }
+
+  #social:hover,
+  .social:hover {
+    color: #000;
+    transform: scale(1.3) translateY(-5px);
+    background-color: var(--accent);
+    box-shadow: 0 0 25px var(--accent);
+  }
+
+  /* Rotating job title. If a browser can't animate `content`, it just shows the first title. */
+  .profession-span {
+    position: relative;
+    display: inline-block;
+  }
+
+  .profession-span::before {
+    content: "WEB DEVELOPER";
+    color: var(--accent-text);
+    animation: words 20s infinite 0.5s ease-out alternate-reverse;
+  }
+
+  /* Blinking caret (old rule had invalid `right:-8` and `calc(100%+8px)` so it never worked) */
+  .profession-span::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -8px;
+    height: 100%;
+    border-left: 3px solid var(--accent-text);
+    animation: cursor 0.6s infinite;
+  }
+
+  .mainPragraph {
+    width: 100%;
+    max-width: 40rem;
+    font-size: clamp(1.6rem, 2vw, 2rem);
+    opacity: 0.85;
+  }
+
+  /* ===== About ===== */
+  .AboutSection {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem 8rem;
+    margin-top: 10rem;
     padding: 1rem;
-    border-radius: 0.5rem;
-    border-bottom: 0.5rem solid  #b74b4b;
-
-
-  }
-}
-
-
-  
-
-.Main{ 
-
-  display: flex;
-  gap: 8rem;
-  margin-top:100px ;
-  padding: 40px;
-  flex-wrap: wrap;
-  }
-  .intro{
-    width: 50%;
-    margin-left: 40px;
-    height: 500px;
-    margin-top: 100px;
   }
 
+  .AboutPicture {
+    position: relative;
+    flex: 1 1 28rem;
+    width: 100%;
+    max-width: 45rem;
+    height: auto;
+    margin-top: 5rem;
+    margin-left: 5rem;
+    object-fit: cover;
+    border: 3px solid transparent;
+    border-radius: 30px;
+    box-shadow: 0 0 25px;
+    cursor: pointer;
+    transition: transform 0.5s, border-color 0.5s, box-shadow 0.5s;
+  }
 
-.name{
-  font-size: 6rem;
-  font-weight: 700;
-  line-height:1.3 ;
+  .AboutPicture:hover {
+    transform: scale(1.05) translateY(-1px);
+    border-color: var(--accent);
+    box-shadow: 0 0 25px var(--accent);
+  }
+
+  .aboutTitle {
+    flex: 1 1 40rem;     /* was width:35% while its children were 500px wide (overflow) */
+    max-width: 60rem;
+    margin-left: 4rem;
+  }
+
+  .aboutHeading {
+    font-size: clamp(2.8rem, 4vw, 3.6rem);
+    font-weight: 600;
+  }
+
+  .aboutDescription {
+    width: 100%;
+    max-width: 50rem;
+    font-size: clamp(1.6rem, 2vw, 2rem);
+    opacity: 0.85;
+  }
+
+  .experienceSection,
+  .educationSection,
+  .skillSection {
+    width: 100%;
+    max-width: 50rem;
+    margin-left: 1rem;
+    font-size: clamp(1.6rem, 2vw, 2rem);
+    font-weight: 400;
+    color: #fff;
+    opacity: 0.85;
+    transform-origin: left center;
+    transition: transform 0.5s, color 0.5s, opacity 0.5s; /* old `linear infinite` was invalid */
+  }
+
+  .experienceSection:hover,
+  .educationSection:hover,
+  .skillSection:hover {
+    transform: scale(1.05) translateY(-1px);
+    color: var(--accent-text);
+    opacity: 1;
+  }
+
+  /* ===== Projects ===== */
+  .projectContainer {
+    display: grid;
+    /* fixed 325px cards, centred, never wider than the screen */
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 32.5rem), 32.5rem));
+    justify-content: center;
+    gap: 4rem 3rem;
+    width: 100%;
+    min-height: 50rem;
+    margin-top: 10rem;
+    padding: 4rem;
+  }
+
+  .projectCard {
+    min-height: 32.5rem;
+    height: auto;
+    background-color: var(--card);
+    border: 3px solid transparent;
+    border-radius: 12px;
+    transition: transform 0.5s, border-color 0.5s, box-shadow 0.5s;
+  }
+
+  .projectCard:hover {
+    transform: scale(1.05) translateY(-1px);
+    border-color: var(--accent);
+    box-shadow: 0 0 25px var(--accent);
+  }
+
+  .projectImage {
+    width: 100%;
+    height: 22rem;
+    object-fit: cover;
+    background-color: var(--accent);
+    border-radius: 10px;
+  }
+
+  .projectTitle {
+    margin-top: 1rem;
+    padding: 0 3rem;
+    font-size: 2rem;
+  }
+
+  .projectButton {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 1rem 3rem 1rem;
+  }
+
+  .projectlink {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 10rem;
+    min-height: 4rem;       /* comfortable tap target */
+    padding: 0.7rem 1rem;
+    font-weight: 400;
+    border: 3px solid transparent;
+    border-radius: 10px;
+    transition: transform 0.5s, border-color 0.5s, box-shadow 0.5s;
+  }
+
+  .projectlink:hover {
+    transform: scale(1.1) translateY(-1px);
+    border-color: var(--accent);
+    box-shadow: 0 0 25px var(--accent);
+  }
+
+  /* ===== Contact ===== */
+  .contactSection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4rem;
+    width: 100%;
+    margin-top: 10rem;
+    padding: 1rem;
+  }
+
+  .conectSection {
+    flex: 1 1 28rem;
+    max-width: 40rem;
+    margin-left: 2rem;
+  }
+
+  .conectHeading {
+    font-size: clamp(2.8rem, 4vw, 3.6rem);
+    font-weight: 600;
+  }
+
+  .conectDescription {
+    max-width: 40rem;
+    font-size: clamp(1.6rem, 2vw, 2rem);
+    opacity: 0.85;
+  }
+
+  .contactForm {
+    flex: 1 1 36rem;
+    max-width: 60rem;
+    margin-left: 4rem;
+    margin-right: 2rem;
+  }
+
+  /* Submit button: remove the background/colour lines if you already style it in your JSX */
+  .submitButton {
+    min-width: 10rem;
+    min-height: 4rem;
+    margin-top: 2rem;
+    padding: 0.5rem 1.5rem;
+    font-weight: 400;
+    color: #fff;
+    background-color: var(--accent);
+    border: 3px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.5s, border-color 0.5s, box-shadow 0.5s;
+  }
+
+  .submitButton:hover {
+    transform: scale(1.1) translateY(-1px);
+    border-color: var(--accent);
+    box-shadow: 0 0 25px var(--accent);
+  }
+
+ /* ===========================
+   FOOTER: BASE ADDITIONS (all sizes)
+   =========================== */
+.footerLogo a {
+  color: inherit;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.3s, text-shadow 0.3s;
 }
-span{
- 
-  color: #b74b4b;
+
+.footerLogo a:hover,
+.footerLogo a:focus-visible {
+  color: #fff;
+  text-shadow: 0 0 15px var(--accent);
 }
 
-.profession{
-  font-size: 4rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  
-}
+  /* ================= Responsive ================= */
 
-.picture{
-  margin-top: 40px;
-  margin-left: 30px;
-  position: relative;
-  width: 32vw;
-  border-radius: 30px;
-  box-shadow: 0 0 25px;
-  cursor: pointer;
-  transition-duration: 0.5s;
-}
-.picture:hover{
-  transform: scale(1.1) translateY(-1px); 
-  border: 3px solid #b74b4b;
-  box-shadow: 0 0 25px #b74b4b; 
+  /* Tablets and below */
+  @media (max-width: 1024px) {
+    .Main,
+    .AboutSection {
+      gap: 4rem;
+    }
+    .contactSection {
+      gap: 3rem;
+    }
+  }
 
-}
+  /* Phones / small tablets */
+  @media (max-width: 768px) {
+    :root {
+      --header-h: 12rem; /* logo + wrapped nav are taller */
+    }
 
-#social{
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 4rem;
-  height: 4rem;
-  background-color: transparent;
-  border: 0.2rem solid #b74b4b;
-  border-radius: 50%;
-  margin: 1rem 1rem 2rem;
-  transition: 0.3s ease;
-  transition-duration: 0.5s;
-  color: white;
-
-}
-
-#social:hover{
-  color: black;
-  transform: scale(1.3) translateY(-5px);
-  background-color:#b74b4b; ;
-  box-shadow: 0 0 25px #b74b4b; 
-
-}
-
-
-
-
-
-
-.profession-span{
-  position: relative;
-
-}
-
-.profession-span::before{
-  content: "Next js developer";
-  color: #b74b4b;
-  animation: words 20s infinite 0.5s ease-out alternate-reverse ;
-  
-}
-
-.profession-span::after{
-  content: "";
-  position: absolute;
-  right: -8;
-  width: calc(100%+8px);
-  height: 100%;
-  background-color: #161616;
-  border-left: 3px solid #161616;
-  animation: cursor 0.6s infinite;
-}
-
-.mainPragraph{
-  width: 400px;
-  font-size: 20px;
-  opacity: 85%;
-
-
-
-}
-
-@keyframes cursor {
-  to {
-    border-left: 3px solid #161616;
    
-    
+
+   
+
+    .Main {
+      gap: 3rem;
+      padding: 2rem;
+    }
+
+    .intro,
+    .aboutTitle,
+    .conectSection,
+    .contactForm {
+      flex-basis: 100%;
+      max-width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .picture,
+    .AboutPicture {
+      flex-basis: 100%;
+      max-width: 36rem;
+      margin: 2rem auto 0;
+    }
+
+    .AboutSection,
+    .contactSection {
+      padding: 2rem;
+    }
+
+    .experienceSection,
+    .educationSection,
+    .skillSection {
+      margin-left: 0;
+    }
+
+    .projectContainer {
+      padding: 2rem;
+    }
+
+    .footerLogo {
+      font-size: 2.4rem;
+    }
+  }
+
+  /* Small phones */
+  @media (max-width: 480px) {
+    .header-button {
+      gap: 1.5rem;
+      font-size: 1.4rem;
+    }
+
+    .Main,
+    .AboutSection,
+    .contactSection,
+    .projectContainer {
+      padding: 1.5rem;
+    }
+
+    .footerParagraph {
+      font-size: 1.3rem;
+    }
+  }
+}
+
+/* ---------- Keyframes (kept outside layers) ---------- */
+@keyframes cursor {
+  50% {
+    border-left-color: transparent;
   }
 }
 
 @keyframes words {
-  0%,25% {
+  0%, 25% {
     content: "WEB DEVELOPER";
-    
   }
-  26%,50%{
-    content: "NextJS DEVELOPER ";
-   
+  26%, 50% {
+    content: "NEXTJS DEVELOPER";
   }
-  51%,75%{
+  51%, 75% {
     content: "UI/UX DESIGNER";
- 
   }
-  76%,100%{
+  76%, 100% {
     content: "WEB DEVELOPER";
-
-
+  }
 }
 
-
-
+/* Respect "reduce motion" settings */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-@media (max-width:1000px){
-  .Main{
+/* ===========================
+   DESKTOP (769px and up)
+   =========================== */
+@media (min-width: 769px) {
+  :root {
+    --header-h: 8rem;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    height: var(--header-h);
+    padding: 0 8%;
+    background-color: rgba(22, 22, 22, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .logo {
+    font-size: 2.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s, text-shadow 0.3s;
+  }
+
+  .logo:hover {
+    color: var(--accent);
+    text-shadow: 0 0 15px var(--accent);
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  #primary-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     gap: 4rem;
-  
-    
+    margin: 0;
+    padding: 0;
+  }
+
+  #primary-nav a {
+    position: relative;
+    padding: 0.6rem 0;
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  #primary-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  #primary-nav a:hover,
+  #primary-nav a:focus-visible {
+    color: #fff;
+  }
+
+  #primary-nav a:hover::after,
+  #primary-nav a:focus-visible::after {
+    width: 100%;
   }
 }
-@media(max-width:995px){
-  .intro{
-    flex-direction: column;
-  
-    margin: 4rem 4em;
-  
 
+/* ===========================
+   TABLET / SMALL LAPTOP (769px - 1024px)
+   Tighter spacing so the links never crowd the logo
+   =========================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  :root {
+    --header-h: 7rem;
   }
 
-  .name{
-    font-size: 5rem;
+  header {
+    padding: 0 5%;
   }
 
-  .profession{
-    font-size: 3rem;
+  .logo {
+    font-size: 2.4rem;
   }
 
-  .picture{
-    width: 70vW;
-    margin-top: 4rem;
-
+  #primary-nav {
+    gap: 2.4rem;
   }
-  .mainPragraph{
-    width: 300px;
+
+  #primary-nav a {
     font-size: 1.5rem;
-    opacity: 85%;
-  
   }
 }
 
-@media(max-width:600px){
-  .intro{
+/* ===========================
+   LARGE SCREENS (1440px and up)
+   Keeps content from stretching to the screen edges
+   =========================== */
+@media (min-width: 1440px) {
+  header {
+    padding-inline: max(8%, calc((100% - 1300px) / 2));
+  }
+
+  #primary-nav {
+    gap: 5rem;
+  }
+
+  #primary-nav a {
+    font-size: 1.8rem;
+  }
+}
+
+/* ===========================
+   MOBILE (768px and below)
+   =========================== */
+@media (max-width: 768px) {
+  :root {
+    --header-h: 7rem;
+  }
+
+  header {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
     flex-direction: column;
-  
-    margin: 0px;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+    width: 4.4rem;
+    height: 4.4rem;
+    padding: 0;
+    background: transparent;
+    border: 2px solid var(--accent);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: box-shadow 0.3s;
   }
-  
 
+  .menu-toggle:hover {
+    box-shadow: 0 0 15px var(--accent);
   }
 
- 
-
-  
-
-/* ABOUT SECTION */
-.AboutSection{
-  display: flex;
-  gap: 8rem;
-  margin-top:100px ;
-  padding: 10px;
-  flex-wrap: wrap;
-}
-
-.AboutPicture{
- margin-top: 50px;
-  margin-left: 50px;
-  position: relative;
-  width: 32vw;
-  border-radius: 30px;
-  box-shadow: 0 0 25px;
-  cursor: pointer;
-  transition-duration: 0.5s;
-}
-.AboutPicture:hover{
-  transform: scale(1.1) translateY(-1px); 
-  border: 3px solid #b74b4b;
-  box-shadow: 0 0 25px #b74b4b; 
-
-}
-.aboutTitle{
-  width: 35%;
-  margin-left: 40px;
-  
-}
-
-.aboutHeading{
-  font-size: 36px;
-  font-weight: 600;
-}
-.aboutDescription{
-  width: 500px;
-  font-size: 20px;
-  opacity: 85%;
-}
-
-
-.experienceSection{
-  width: 500px;
-  font-size: 20px;
-  opacity: 85%;
-  margin-left: 15px;
-  font-weight: 400;
-  color: rgb(252, 249, 249);
-  transition: 0.5s linear infinite;
-  transition-duration: 0.5s;
-
-}
-.experienceSection:hover{
-  transform: scale(1.1) translateY(-1px); 
-  color: #b74b4b;
-  opacity: 100%;
-  font-weight: 400;
-
-}
-.educationSection{
-  width: 500px;
-  font-size: 20px;
-  opacity: 85%;
-  margin-left: 10px;
-  margin-right: 15px;
-  font-weight: 400;
-  color: rgb(255, 255, 255);
-  transition: 0.5s linear infinite;
-  transition-duration: 0.5s;
-}
-.educationSection:hover{
-  transform: scale(1.1) translateY(-1px); 
-  color: #b74b4b;
-  opacity: 100%;
-  font-weight: 400;
-
-}
-.skillSection{
-  width: 500px;
-  font-size: 20px;
-  opacity: 85%;
-  margin-left: 10px;
-  font-weight: 400;
-  color: rgb(255, 255, 255);
-  transition: 0.5s linear infinite;
-  transition-duration: 0.5s;
-}
-.skillSection:hover{
-  transform: scale(1.1) translateY(-1px); 
-  color: #b74b4b;
-  opacity: 100%;
-  font-weight: 400;
-  
-}
-
-
-
-@media (max-width:1000px){
-  .AboutSection{
-    gap: 2rem;
-    
+  .menu-toggle-bar {
+    display: block;
+    width: 2.2rem;
+    height: 2px;
+    background-color: #fff;
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
   }
-}
-@media(max-width:995px){
-  .aboutTitle{
+
+  .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(1) {
+    transform: translateY(0.8rem) rotate(45deg);
+  }
+  .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(3) {
+    transform: translateY(-0.8rem) rotate(-45deg);
+  }
+
+  #primary-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    display: flex;
     flex-direction: column;
-    margin: 4rem 4em;
-
-
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 0;
+    margin: 0;
+    padding: 1rem 5% 2rem;
+    font-size: 1.8rem;
+    background-color: rgba(22, 22, 22, 0.97);
+    border-bottom: 3px solid var(--accent);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-1rem);
+    transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
   }
 
-  .aboutHeading{
+  #primary-nav.open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  #primary-nav a {
+    padding: 1.4rem 0;
+    font-size: 1.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+}
+
+/* ===========================
+   SMALL PHONES (480px and below)
+   Additive only: shrinks sizes, doesn't change behavior
+   =========================== */
+@media (max-width: 480px) {
+  :root {
+    --header-h: 6rem;
+  }
+
+  header {
+    padding: 0.8rem 4%;
+  }
+
+  .logo {
+    font-size: 2.2rem;
+  }
+
+  .menu-toggle {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  #primary-nav {
+    padding: 0.5rem 4% 1.5rem;
+  }
+
+  #primary-nav a {
+    font-size: 1.6rem;
+    padding: 1.2rem 0;
+  }
+}
+
+/* ===========================
+   PHONES IN LANDSCAPE (short screens)
+   Lets the dropdown scroll if it doesn't fit
+   =========================== */
+@media (max-width: 768px) and (max-height: 500px) {
+  #primary-nav {
+    max-height: calc(100vh - var(--header-h));
+    overflow-y: auto;
+  }
+}
+
+
+
+/* ===========================
+   FOOTER: LARGE SCREENS (1440px and up)
+   =========================== */
+@media (min-width: 1440px) {
+  .footerContainer {
+    padding: 3rem 8%;
+  }
+
+  .footerLogo {
+    font-size: 3.4rem;
+  }
+
+  .footerParagraph {
+    font-size: 1.6rem;
+  }
+}
+
+/* ===========================
+   FOOTER: TABLET AND BELOW (1024px and below)
+   =========================== */
+@media (max-width: 1024px) {
+  .footerContainer {
+    padding: 2.4rem 5%;
+  }
+
+  .footerLogo {
+    font-size: 2.8rem;
+  }
+}
+
+/* ===========================
+   FOOTER: PHONES (768px and below)
+   =========================== */
+@media (max-width: 768px) {
+  .footerContainer {
+    gap: 0.6rem;
+    padding: 2rem 4%;
+  }
+
+  .footerLogo {
+    font-size: 2.4rem;
+  }
+
+  .footerParagraph {
+    margin-top: 1rem;
+    font-size: 1.4rem;
+  }
+}
+
+/* ===========================
+   FOOTER: SMALL PHONES (480px and below)
+   =========================== */
+@media (max-width: 480px) {
+  .footerContainer {
+    padding: 1.6rem 4%;
+  }
+
+  .footerLogo {
     font-size: 2rem;
-
+    letter-spacing: 0.02em;
+    overflow-wrap: anywhere; /* long name never causes sideways scroll */
   }
 
-  
-  .AboutPicture{
-    width: 70vW;
-    margin-top: 4rem;
-    
-
-  }
-  .aboutDescription{
-    width: 300px;
-    font-size: 1.5rem;
-    opacity: 85%;
-  }
-  .experienceSection,.skillSection,.educationSection{
-    width: 300px;
-    font-size: 1.5rem;
-    opacity: 85%;
-  }
-
-  
-}
-@media(max-width:600px){
-  .aboutTitle{
-    flex-direction: column;
-    margin: 0px;
-
-
-  }
-  
-}
-
-
-
-
-/* PRoject Page */
-
-
-.projectContainer{
-  display: flex;
-  width: 100%;
-  min-height: 500px;
-  padding: 40px;
-  flex-wrap: wrap;
-
-}
-
-.projectCard{
-  width: 325px;
-  height: 325px;
-  min-height: 325;
-  background-color: #161616;
-  border-radius: 12px;
-  border: 3px solid transparent;
-  margin-top: 100px;
-  transition-duration: 0.5s ;
- 
-  margin-left: 30px;
-
-
-}
-.projectCard:hover{
-  
-  transform: scale(1.1) translateY(-1px); 
-  border: 3px solid #b74b4b;
-  box-shadow: 0 0 25px #b74b4b; 
-
-}
-
-.projectImage{
-  width: 100%;
-  height: 220px;
-  background-color: #b74b4b;
- 
-  border-radius: 10px;
-}
-
-.projectTitle{
-  font-size: 20px;
-  margin-top: 10px;
-  margin-left: 50px;
- 
- 
-
-}
-
-.projectButton{
-  margin-left: 30px;
-  gap: 4rem;
-  margin-top: 10px;
-  display: flex;
-  margin-bottom: 5px;
-}
-.projectlink{
-  margin-left: 10px;
-  height: 30px;
-  width: 100px;
-  margin-bottom: 5px;
-  font-weight: 400;
-  padding: 7px;
-  border: 2px solid transparent;
-  border-radius: 10px;
-  transition-duration: 0.5s;
-
-
-}
-.projectlink:hover{
-  transform: scale(1.1) translateY(-1px); 
-  border: 3px solid #b74b4b;
-  box-shadow: 0 0 25px #b74b4b; 
- 
-
-}
-
-
-@media only screen and (max-width:1000px){
-  .projectContainer{
-    gap: 2rem;
-   
+  .footerParagraph {
+    font-size: 1.2rem;
   }
 }
-@media(max-width:600px){
-  .aboutTitle{
-    flex-direction: column;
-    margin: 5rem 5em;
-
-
-  }
-
-  .projectTitle{
-    font-size: 2rem;
-
-  }
-
-  .projectCard{
-    margin-left: 10px;
-    margin-right: 30px;
-    width: 650px;
-    height: fit-content;
-  
-  }
- .projectImage{
-   
-    height: 200px;
-    
-  }
-}
-@media(max-width:300px){
-  .projectContainer{
-   margin-right: 20px;
-  
-  }
-  
-  .projectTitle{
-    font-size: 2rem;
-
-  }
-
-  .projectCard{
-   
-    margin-left: 10px;
-    margin-right: 20px;
-    width: 250px;
-    height: fit-content;
-  
-    
-
-  }
-  .projectButton{
-    
-    gap: 2rem;
-   
-  }
-
-}
-
-
-
-/* Contact Page */
-
-.contactSection{
-  display: flex;
-  padding: 10px;
-  width: 100%;
-  margin-top: 100px;
-  flex-wrap: wrap; 
-  height: fit-content;
-}
-
-.conectSection{
-  width: 35%;
-  margin-left: 20px;
-  height: 500px;
-}
-.conectHeading{
-  font-size: 36px;
-  font-weight: 600;
-}
-.conectDescription{
-  width: 300px;
-  font-size: 20px;
-  opacity: 85%;
-
-}
-
-
-
-.contactForm{
-  width: 45%;
-  height: 600px;
-  margin-left: 40px;
-
-}
-
-form{
-  height: 600px;
-  margin-right: 50px;
-  padding: 10px;
-  display: block;
-}
-input,textarea{
-  display: block;
-  height: 35px;
-  border: 3px solid #b74b4b;
-  border-radius: 10px;
-  width: 90%;
-  font-size:15px ;
-  color:  #b74b4b;
-  background-color: rgb(235, 235, 235);
-}
-label{
-  font-size: 20px;
-  margin-top: 15px;
-}
-
-.submitButton{
-  height: 30px;
-  width: 100px;
-  font-weight: 200;
-  margin-top: 20px;
-  padding: 5px;
-  border: 2px solid transparent;
-  border-radius: 10px;
-  transition-duration: 0.5s;
-
-}
-.submitButton:hover{
-  transform: scale(1.1) translateY(-1px); 
-  border: 3px solid #b74b4b;
-  box-shadow: 0 0 25px #b74b4b; 
-
-}
-@media only screen and (max-width:1000px){
-  .contactSection{
-    flex-direction: column;
-    gap: 2rem;
-  
-   
-  }
-}
-@media(max-width:600px){
-  .contactForm{
-    flex-direction: column;
-    margin: 2em 2em;
-    height: 400px;
-    margin-bottom: -70px;
-    margin-top: -30px;
-  }
-  input,textarea{
-    width: 300px;
-  }
-  .conectSection{
-    flex-direction: column;
-    margin-top: -20px;
-    margin: 2em 2em;
-    height: 400px;
-  }
-  form{
-    height: 400px;
-   
-  }
-  label{
-    font-size: 15px;
-  margin-top: 15px;
-}
-}
-@media(max-width:300px){
-
-  .contactSection{
-    flex-direction: column;
-    gap: 2rem;
-    margin-right: 20px;
-   
-  }
-
-}
-
-
-
-/* footer Page */
-.footerContainer{
-  display: flex;
-  background-color: rgb(63, 61, 61);
-  color: #b74b4b;
-  padding: 20px;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  flex-wrap: wrap;
-}
-.footerLogo{
-  font-size: 30px;
-  font-weight: 600;
-  margin-left: -50px;
-}
-.footerParagraph{
-  font-size: 15px;
-  font-weight: 600;
-  opacity: 85%;
-  margin-top: 20px;
-}
-
-
-
-
-@media(max-width:600px){
-  .footerContainer{
-    flex-direction: column;
-    padding: 10px;
- 
-  }
-
-  .footerLogo{
-    font-size: 20px;
-    margin-left: 40px;
-  }
-
-  .footerParagraph{
-    font-size: 12px;
-    margin-left: 40px;
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
- 
