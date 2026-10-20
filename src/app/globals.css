@@ -707,11 +707,16 @@ footer {
   }
 
   header {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 5%;
+  position: sticky;   /* or fixed; this makes it the reference for #primary-nav */
+  top: 0;
+  z-index: 100;
+  background-color: rgba(22, 22, 22, 0.97); /* use your page's dark bg */
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5%;
+    
   }
 
   .menu-toggle {
@@ -756,6 +761,7 @@ footer {
   }
 
   #primary-nav {
+    z-index: 99;
     position: absolute;
     top: 100%;
     left: 0;
