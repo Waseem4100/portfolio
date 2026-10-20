@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import SS from "@/public/SS.png";
+
 import github from "@/public/github.png";
 import linkedin from "@/public/linkdine.png";
+import profile from "@/public/profile.png";
 
 
 
@@ -13,7 +14,7 @@ export default function Main(){
   
  
 
- <div>  <Image src={SS} alt="profilePicture"  loading="lazy"  className="picture"  />
+ <div>  <Image src={profile} alt="profilePicture"  loading="lazy"  className="picture"  />
   
 </div>
 

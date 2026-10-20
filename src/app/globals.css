@@ -1,19 +1,22 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
 /* Tailwind v4 users: replace the three lines above with  @import "tailwindcss";  */
 
-/* ---------- Design tokens ---------- */
+/* ==========================================================================
+   DESIGN TOKENS
+   ========================================================================== */
 :root {
-  --accent: #b74b4b;        /* borders, fills, glows (unchanged brand colour) */
-  --accent-text: #f28b8b;   /* accent used for TEXT: ~4.5:1 on the dark bg (#b74b4b is only ~2:1) */
-  --accent-dark: #8f3535;   /* text inside the light form inputs */
+  --accent: #b74b4b;       /* borders, fills, glows (brand colour) */
+  --accent-text: #f28b8b;  /* accent used for TEXT: ~4.5:1 on the dark bg (#b74b4b is only ~2:1) */
+  --accent-dark: #8f3535;  /* text inside the light form inputs */
   --bg: #3d3d3d;
   --card: #161616;
-  --header-h: 9rem;         /* used to clear the fixed header */
+  --header-h: 9rem;        /* clears the fixed header */
 }
 
-/* ---------- Base (element selectors) ---------- */
+/* ==========================================================================
+   BASE
+   ========================================================================== */
 @layer base {
   *,
   *::before,
@@ -41,14 +44,13 @@
     line-height: 1.5;
   }
 
-  /* Visible keyboard focus (the old `outline: none` removed it) */
+  /* Visible keyboard focus */
   :focus-visible {
     outline: 3px solid var(--accent-text);
     outline-offset: 3px;
   }
 
- 
-
+  /* ----- Form ----- */
   form {
     display: block;
     padding: 1rem;
@@ -56,8 +58,8 @@
 
   label {
     display: block; /* inline elements ignore vertical margins */
-    font-size: 2rem;
     margin: 1.5rem 0 0.5rem;
+    font-size: 2rem;
   }
 
   form input,
@@ -84,15 +86,83 @@
   }
 }
 
-/* ---------- Components ---------- */
+/* ==========================================================================
+   COMPONENTS
+   ========================================================================== */
 @layer components {
-  /* ===== Header ===== */
+
+  /* ---------- Shared patterns ---------- */
+
+  /* Cards, pictures and buttons: same border + hover transition */
+  .picture,
+  .AboutPicture,
+  .projectCard,
+  .projectlink,
+  .submitButton {
+    border: 3px solid transparent; /* reserved so hover doesn't shift layout */
+    transition: transform 0.5s, border-color 0.5s, box-shadow 0.5s;
+  }
+
+  .picture:hover,
+  .AboutPicture:hover,
+  .projectCard:hover {
+    transform: scale(1.05) translateY(-1px);
+    border-color: var(--accent);
+    box-shadow: 0 0 25px var(--accent);
+  }
+
+  .projectlink:hover,
+  .submitButton:hover {
+    transform: scale(1.1) translateY(-1px);
+    border-color: var(--accent);
+    box-shadow: 0 0 25px var(--accent);
+  }
+
+  /* Section wrappers */
+  .Main,
+  .AboutSection,
+  .contactSection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .Main,
+  .AboutSection {
+    align-items: center;
+    gap: 4rem 8rem;
+  }
+
+  .AboutSection,
+  .projectContainer,
+  .contactSection {
+    margin-top: 10rem;
+  }
+
+  /* Text blocks */
+  .mainPragraph,
+  .aboutDescription,
+  .conectDescription,
+  .experienceSection,
+  .educationSection,
+  .skillSection {
+    font-size: clamp(1.6rem, 2vw, 2rem);
+    opacity: 0.85;
+  }
+
+  .aboutHeading,
+  .conectHeading {
+    font-size: clamp(2.8rem, 4vw, 3.6rem);
+    font-weight: 600;
+  }
+
+  /* ---------- Header ---------- */
   .logo {
+    margin: 0.5rem 1.5rem;
     font-size: clamp(2.2rem, 4vw, 3rem);
     font-style: italic;
-    color: var(--accent-text);
-    margin: 0.5rem 1.5rem;
     font-weight: 800;
+    color: var(--accent-text);
     transition: transform 0.5s ease;
   }
 
@@ -104,8 +174,8 @@
     display: flex;
     flex-wrap: wrap;
     gap: 3rem;
-    padding: 2rem;
     margin-left: 4rem;
+    padding: 2rem;
     font-size: 1.8rem;
     font-weight: 500;
     color: #fff;
@@ -122,19 +192,15 @@
     border-bottom-color: var(--accent);
   }
 
-  /* ===== Hero ===== */
+  /* ---------- Hero ---------- */
   .Main {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 4rem 8rem;
     margin-top: calc(var(--header-h) + 2rem);
     padding: 4rem;
   }
 
-  .intro {
-    flex: 1 1 40rem;     /* was width:50% + height:500px (overflowed on small screens) */
+  .intro,
+  .aboutTitle {
+    flex: 1 1 40rem;
     max-width: 60rem;
     margin-left: 4rem;
   }
@@ -152,34 +218,41 @@
   }
 
   .profession {
+    margin-bottom: 1rem;
     font-size: clamp(2.2rem, 4.5vw, 4rem);
     font-weight: 700;
-    margin-bottom: 1rem;
   }
 
-  .picture {
+  .mainPragraph {
+    width: 100%;
+    max-width: 40rem;
+  }
+
+  /* Pictures (hero + about) */
+  .picture,
+  .AboutPicture {
     position: relative;
     flex: 1 1 28rem;
     width: 100%;
     max-width: 45rem;
     height: auto;
-    margin-top: 4rem;
-    margin-left: 3rem;
     object-fit: cover;
-    border: 3px solid transparent; /* reserved so hover doesn't shift layout */
     border-radius: 30px;
     box-shadow: 0 0 25px;
     cursor: pointer;
-    transition: transform 0.5s, border-color 0.5s, box-shadow 0.5s;
   }
 
-  .picture:hover {
-    transform: scale(1.05) translateY(-1px);
-    border-color: var(--accent);
-    box-shadow: 0 0 25px var(--accent);
+  .picture {
+    margin-top: 4rem;
+    margin-left: 3rem;
   }
 
-  /* Use class="social" in your HTML (ids must be unique). #social kept so nothing breaks. */
+  .AboutPicture {
+    margin-top: 5rem;
+    margin-left: 5rem;
+  }
+
+  /* Social icons. Use class="social" in your HTML (ids must be unique); #social kept so nothing breaks. */
   #social,
   .social {
     display: inline-flex;
@@ -199,8 +272,8 @@
   #social:hover,
   .social:hover {
     color: #000;
-    transform: scale(1.3) translateY(-5px);
     background-color: var(--accent);
+    transform: scale(1.3) translateY(-5px);
     box-shadow: 0 0 25px var(--accent);
   }
 
@@ -216,7 +289,7 @@
     animation: words 20s infinite 0.5s ease-out alternate-reverse;
   }
 
-  /* Blinking caret (old rule had invalid `right:-8` and `calc(100%+8px)` so it never worked) */
+  /* Blinking caret */
   .profession-span::after {
     content: "";
     position: absolute;
@@ -227,62 +300,14 @@
     animation: cursor 0.6s infinite;
   }
 
-  .mainPragraph {
-    width: 100%;
-    max-width: 40rem;
-    font-size: clamp(1.6rem, 2vw, 2rem);
-    opacity: 0.85;
-  }
-
-  /* ===== About ===== */
+  /* ---------- About ---------- */
   .AboutSection {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 4rem 8rem;
-    margin-top: 10rem;
     padding: 1rem;
-  }
-
-  .AboutPicture {
-    position: relative;
-    flex: 1 1 28rem;
-    width: 100%;
-    max-width: 45rem;
-    height: auto;
-    margin-top: 5rem;
-    margin-left: 5rem;
-    object-fit: cover;
-    border: 3px solid transparent;
-    border-radius: 30px;
-    box-shadow: 0 0 25px;
-    cursor: pointer;
-    transition: transform 0.5s, border-color 0.5s, box-shadow 0.5s;
-  }
-
-  .AboutPicture:hover {
-    transform: scale(1.05) translateY(-1px);
-    border-color: var(--accent);
-    box-shadow: 0 0 25px var(--accent);
-  }
-
-  .aboutTitle {
-    flex: 1 1 40rem;     /* was width:35% while its children were 500px wide (overflow) */
-    max-width: 60rem;
-    margin-left: 4rem;
-  }
-
-  .aboutHeading {
-    font-size: clamp(2.8rem, 4vw, 3.6rem);
-    font-weight: 600;
   }
 
   .aboutDescription {
     width: 100%;
     max-width: 50rem;
-    font-size: clamp(1.6rem, 2vw, 2rem);
-    opacity: 0.85;
   }
 
   .experienceSection,
@@ -291,23 +316,21 @@
     width: 100%;
     max-width: 50rem;
     margin-left: 1rem;
-    font-size: clamp(1.6rem, 2vw, 2rem);
     font-weight: 400;
     color: #fff;
-    opacity: 0.85;
     transform-origin: left center;
-    transition: transform 0.5s, color 0.5s, opacity 0.5s; /* old `linear infinite` was invalid */
+    transition: transform 0.5s, color 0.5s, opacity 0.5s;
   }
 
   .experienceSection:hover,
   .educationSection:hover,
   .skillSection:hover {
-    transform: scale(1.05) translateY(-1px);
     color: var(--accent-text);
     opacity: 1;
+    transform: scale(1.05) translateY(-1px);
   }
 
-  /* ===== Projects ===== */
+  /* ---------- Projects ---------- */
   .projectContainer {
     display: grid;
     /* fixed 325px cards, centred, never wider than the screen */
@@ -316,23 +339,14 @@
     gap: 4rem 3rem;
     width: 100%;
     min-height: 50rem;
-    margin-top: 10rem;
     padding: 4rem;
   }
 
   .projectCard {
-    min-height: 32.5rem;
     height: auto;
+    min-height: 32.5rem;
     background-color: var(--card);
-    border: 3px solid transparent;
     border-radius: 12px;
-    transition: transform 0.5s, border-color 0.5s, box-shadow 0.5s;
-  }
-
-  .projectCard:hover {
-    transform: scale(1.05) translateY(-1px);
-    border-color: var(--accent);
-    box-shadow: 0 0 25px var(--accent);
   }
 
   .projectImage {
@@ -353,36 +367,29 @@
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
-    margin: 1rem 3rem 1rem;
+    margin: 1rem 3rem;
+  }
+
+  /* Project links + submit button: shared sizing */
+  .projectlink,
+  .submitButton {
+    min-width: 10rem;
+    min-height: 4rem; /* comfortable tap target */
+    font-weight: 400;
+    border-radius: 10px;
   }
 
   .projectlink {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 10rem;
-    min-height: 4rem;       /* comfortable tap target */
     padding: 0.7rem 1rem;
-    font-weight: 400;
-    border: 3px solid transparent;
-    border-radius: 10px;
-    transition: transform 0.5s, border-color 0.5s, box-shadow 0.5s;
   }
 
-  .projectlink:hover {
-    transform: scale(1.1) translateY(-1px);
-    border-color: var(--accent);
-    box-shadow: 0 0 25px var(--accent);
-  }
-
-  /* ===== Contact ===== */
+  /* ---------- Contact ---------- */
   .contactSection {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     gap: 4rem;
     width: 100%;
-    margin-top: 10rem;
     padding: 1rem;
   }
 
@@ -392,15 +399,8 @@
     margin-left: 2rem;
   }
 
-  .conectHeading {
-    font-size: clamp(2.8rem, 4vw, 3.6rem);
-    font-weight: 600;
-  }
-
   .conectDescription {
     max-width: 40rem;
-    font-size: clamp(1.6rem, 2vw, 2rem);
-    opacity: 0.85;
   }
 
   .contactForm {
@@ -412,28 +412,33 @@
 
   /* Submit button: remove the background/colour lines if you already style it in your JSX */
   .submitButton {
-    min-width: 10rem;
-    min-height: 4rem;
     margin-top: 2rem;
     padding: 0.5rem 1.5rem;
-    font-weight: 400;
     color: #fff;
     background-color: var(--accent);
-    border: 3px solid transparent;
-    border-radius: 10px;
     cursor: pointer;
-    transition: transform 0.5s, border-color 0.5s, box-shadow 0.5s;
   }
 
-  .submitButton:hover {
-    transform: scale(1.1) translateY(-1px);
-    border-color: var(--accent);
-    box-shadow: 0 0 25px var(--accent);
-  }
+  /* 1. Target the main footer container */
+footer {
+  display: flex;
+  flex-direction: column;  /* Stack items vertically (Logo top, text bottom, etc.) */
+  justify-content: center; /* Center items vertically */
+  align-items: center;     /* Center items horizontally */
+  text-align: center;      /* Center pure inline text */
+  width: 100%;             /* Stretch the footer across the entire screen width */
+  gap: 1.5rem;             /* Add space between logo, nav links, and text */
+  padding: 2rem 1rem;      /* Give the footer some clean breathing room */
+}
 
- /* ===========================
-   FOOTER: BASE ADDITIONS (all sizes)
-   =========================== */
+/* 2. Your existing logo wrapper rules (cleaned up) */
+.footerLogo {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 3. Your existing link styling */
 .footerLogo a {
   color: inherit;
   text-decoration: none;
@@ -447,7 +452,9 @@
   text-shadow: 0 0 15px var(--accent);
 }
 
-  /* ================= Responsive ================= */
+
+
+  /* ---------- Responsive ---------- */
 
   /* Tablets and below */
   @media (max-width: 1024px) {
@@ -455,6 +462,7 @@
     .AboutSection {
       gap: 4rem;
     }
+
     .contactSection {
       gap: 3rem;
     }
@@ -462,16 +470,14 @@
 
   /* Phones / small tablets */
   @media (max-width: 768px) {
-    :root {
-      --header-h: 12rem; /* logo + wrapped nav are taller */
-    }
-
-   
-
-   
-
     .Main {
       gap: 3rem;
+    }
+
+    .Main,
+    .AboutSection,
+    .contactSection,
+    .projectContainer {
       padding: 2rem;
     }
 
@@ -492,23 +498,10 @@
       margin: 2rem auto 0;
     }
 
-    .AboutSection,
-    .contactSection {
-      padding: 2rem;
-    }
-
     .experienceSection,
     .educationSection,
     .skillSection {
       margin-left: 0;
-    }
-
-    .projectContainer {
-      padding: 2rem;
-    }
-
-    .footerLogo {
-      font-size: 2.4rem;
     }
   }
 
@@ -525,14 +518,12 @@
     .projectContainer {
       padding: 1.5rem;
     }
-
-    .footerParagraph {
-      font-size: 1.3rem;
-    }
   }
 }
 
-/* ---------- Keyframes (kept outside layers) ---------- */
+/* ==========================================================================
+   KEYFRAMES & ACCESSIBILITY
+   ========================================================================== */
 @keyframes cursor {
   50% {
     border-left-color: transparent;
@@ -540,7 +531,7 @@
 }
 
 @keyframes words {
-  0%, 25% {
+  0%, 25%, 76%, 100% {
     content: "WEB DEVELOPER";
   }
   26%, 50% {
@@ -548,9 +539,6 @@
   }
   51%, 75% {
     content: "UI/UX DESIGNER";
-  }
-  76%, 100% {
-    content: "WEB DEVELOPER";
   }
 }
 
@@ -565,9 +553,12 @@
   }
 }
 
-/* ===========================
-   DESKTOP (769px and up)
-   =========================== */
+/* ==========================================================================
+   HEADER, NAVIGATION & FOOTER (breakpoint overrides)
+   Kept outside the layers so they win over the component styles above.
+   ========================================================================== */
+
+/* ----- Desktop (769px and up) ----- */
 @media (min-width: 769px) {
   :root {
     --header-h: 8rem;
@@ -648,10 +639,7 @@
   }
 }
 
-/* ===========================
-   TABLET / SMALL LAPTOP (769px - 1024px)
-   Tighter spacing so the links never crowd the logo
-   =========================== */
+/* ----- Tablet / small laptop (769px - 1024px): tighter spacing ----- */
 @media (min-width: 769px) and (max-width: 1024px) {
   :root {
     --header-h: 7rem;
@@ -674,10 +662,18 @@
   }
 }
 
-/* ===========================
-   LARGE SCREENS (1440px and up)
-   Keeps content from stretching to the screen edges
-   =========================== */
+/* ----- Tablet and below (1024px and below): footer ----- */
+@media (max-width: 1024px) {
+  .footerContainer {
+    padding: 2.4rem 5%;
+  }
+
+  .footerLogo {
+    font-size: 2.8rem;
+  }
+}
+
+/* ----- Large screens (1440px and up): keeps content off the screen edges ----- */
 @media (min-width: 1440px) {
   header {
     padding-inline: max(8%, calc((100% - 1300px) / 2));
@@ -690,11 +686,21 @@
   #primary-nav a {
     font-size: 1.8rem;
   }
+
+  .footerContainer {
+    padding: 3rem 8%;
+  }
+
+  .footerLogo {
+    font-size: 3.4rem;
+  }
+
+  .footerParagraph {
+    font-size: 1.6rem;
+  }
 }
 
-/* ===========================
-   MOBILE (768px and below)
-   =========================== */
+/* ----- Mobile (768px and below) ----- */
 @media (max-width: 768px) {
   :root {
     --header-h: 7rem;
@@ -740,9 +746,11 @@
   .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(1) {
     transform: translateY(0.8rem) rotate(45deg);
   }
+
   .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(2) {
     opacity: 0;
   }
+
   .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(3) {
     transform: translateY(-0.8rem) rotate(-45deg);
   }
@@ -780,12 +788,23 @@
     font-size: 1.8rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   }
+
+  .footerContainer {
+    gap: 0.6rem;
+    padding: 2rem 4%;
+  }
+
+  .footerLogo {
+    font-size: 2.4rem;
+  }
+
+  .footerParagraph {
+    margin-top: 1rem;
+    font-size: 1.4rem;
+  }
 }
 
-/* ===========================
-   SMALL PHONES (480px and below)
-   Additive only: shrinks sizes, doesn't change behavior
-   =========================== */
+/* ----- Small phones (480px and below): shrinks sizes only ----- */
 @media (max-width: 480px) {
   :root {
     --header-h: 6rem;
@@ -809,77 +828,10 @@
   }
 
   #primary-nav a {
-    font-size: 1.6rem;
     padding: 1.2rem 0;
-  }
-}
-
-/* ===========================
-   PHONES IN LANDSCAPE (short screens)
-   Lets the dropdown scroll if it doesn't fit
-   =========================== */
-@media (max-width: 768px) and (max-height: 500px) {
-  #primary-nav {
-    max-height: calc(100vh - var(--header-h));
-    overflow-y: auto;
-  }
-}
-
-
-
-/* ===========================
-   FOOTER: LARGE SCREENS (1440px and up)
-   =========================== */
-@media (min-width: 1440px) {
-  .footerContainer {
-    padding: 3rem 8%;
-  }
-
-  .footerLogo {
-    font-size: 3.4rem;
-  }
-
-  .footerParagraph {
     font-size: 1.6rem;
   }
-}
 
-/* ===========================
-   FOOTER: TABLET AND BELOW (1024px and below)
-   =========================== */
-@media (max-width: 1024px) {
-  .footerContainer {
-    padding: 2.4rem 5%;
-  }
-
-  .footerLogo {
-    font-size: 2.8rem;
-  }
-}
-
-/* ===========================
-   FOOTER: PHONES (768px and below)
-   =========================== */
-@media (max-width: 768px) {
-  .footerContainer {
-    gap: 0.6rem;
-    padding: 2rem 4%;
-  }
-
-  .footerLogo {
-    font-size: 2.4rem;
-  }
-
-  .footerParagraph {
-    margin-top: 1rem;
-    font-size: 1.4rem;
-  }
-}
-
-/* ===========================
-   FOOTER: SMALL PHONES (480px and below)
-   =========================== */
-@media (max-width: 480px) {
   .footerContainer {
     padding: 1.6rem 4%;
   }
@@ -892,5 +844,13 @@
 
   .footerParagraph {
     font-size: 1.2rem;
+  }
+}
+
+/* ----- Phones in landscape (short screens): lets the dropdown scroll ----- */
+@media (max-width: 768px) and (max-height: 500px) {
+  #primary-nav {
+    max-height: calc(100vh - var(--header-h));
+    overflow-y: auto;
   }
 }
